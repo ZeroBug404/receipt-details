@@ -53,7 +53,6 @@ function App() {
     setEditFormData(newFormData);
   };
 
-  console.log(addFormData);
 
   const handleAddFormSubmit = (event) => {
     event.preventDefault();
@@ -91,6 +90,34 @@ function App() {
 
     setReceipts(newContacts);
     setEditReceiptId(null);
+  };
+
+  const handleEditClick = (event, receipt) => {
+    event.preventDefault();
+    setEditReceiptId(receipt.id);
+
+    const formValues = {
+      date: receipt.date,
+      amount: receipt.amount,
+      paymentMode: receipt.paymentMode,
+      remark: receipt.remark,
+    };
+
+    setEditFormData(formValues);
+  };
+
+  const handleCancelClick = () => {
+    setEditReceiptId(null);
+  };
+
+  const handleDeleteClick = (contactId) => {
+    const newContacts = [...receipts];
+
+    const index = receipts.findIndex((receipt) => receipt.id === contactId);
+
+    newContacts.splice(index, 1);
+
+    setReceipts(newContacts);
   };
 
   return (
@@ -177,13 +204,13 @@ function App() {
                   <EditableRow
                     editFormData={editFormData}
                     handleEditFormChange={handleEditFormChange}
-                    // handleCancelClick={handleCancelClick}
+                    handleCancelClick={handleCancelClick}
                   />
                 ) : (
                   <ReadOnlyRow
                     receipt={receipt}
-                    // handleEditClick={handleEditClick}
-                    // handleDeleteClick={handleDeleteClick}
+                    handleEditClick={handleEditClick}
+                    handleDeleteClick={handleDeleteClick}
                   />
                 )}
               </>
