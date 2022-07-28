@@ -1,7 +1,9 @@
+import { nanoid } from "nanoid";
 import React, { useState } from "react";
 import "./App.css";
-import { nanoid } from "nanoid";
 import data from "./mock-data.json";
+import ReadOnlyRow from "./components/ReadOnlyRow";
+import EditableRow from "./components/EditableRow";
 
 function App() {
   const [receipts, setReceipts] = useState(data);
@@ -11,6 +13,15 @@ function App() {
     paymentMode: "",
     remark: "",
   });
+
+  const [editFormData, setEditFormData] = useState({
+    date: "",
+    amount: "",
+    paymentMode: "",
+    remark: "",
+  });
+
+  const [editReceiptId, setEditReceiptId] = useState(null);
 
   const handleAddFormChange = (event) => {
     event.preventDefault();
@@ -22,6 +33,18 @@ function App() {
     newFormData[fieldName] = fieldValue;
 
     setAddFormData(newFormData);
+  };
+
+  const handleEditFormChange = (event) => {
+    event.preventDefault();
+
+    const fieldName = event.target.getAttribute("name");
+    const fieldValue = event.target.value;
+
+    const newFormData = { ...editFormData };
+    newFormData[fieldName] = fieldValue;
+
+    setEditFormData(newFormData);
   };
 
   console.log(addFormData);
@@ -41,7 +64,29 @@ function App() {
     setReceipts(newContacts);
   };
 
+  const handleEditFormSubmit = (event) => {
+    event.preventDefault();
+
+    const editedContact = {
+      id: editReceiptId,
+      date: editFormData.date,
+      address: editFormData.address,
+      phoneNumber: editFormData.phoneNumber,
+      email: editFormData.email,
+    };
+
+    const newContacts = [...receipts];
+
+    const index = receipts.findIndex((receipt) => receipt.id === editReceiptId);
+
+    newContacts[index] = editedContact;
+
+    setReceipts(newContacts);
+    setEditReceiptId(null);
+  };
+
   return (
+    <>
     <div className="app-container">
       <h2>Receipt Details</h2>
       <form onSubmit={handleAddFormSubmit}>
@@ -97,6 +142,46 @@ function App() {
         </div>
       </form>
     </div>
+
+
+
+      {/* table */}
+    <div className="table">
+      <form onSubmit={handleEditFormSubmit}>
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Address</th>
+              <th>Phone Number</th>
+              <th>Email</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+          {receipts.map((receipt) => (
+              <>
+                {editReceiptId === receipt.id ? (
+                  <EditableRow
+                    editFormData={editFormData}
+                    handleEditFormChange={handleEditFormChange}
+                    // handleCancelClick={handleCancelClick}
+                  />
+                ) : (
+                  <ReadOnlyRow
+                    receipt={receipt}
+                    // handleEditClick={handleEditClick}
+                    // handleDeleteClick={handleDeleteClick}
+                  />
+                )}
+              </>
+            ))}
+          </tbody>
+        </table>
+      </form>
+    </div>
+
+    </>
   );
 }
 
