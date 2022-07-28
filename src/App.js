@@ -1,11 +1,50 @@
-import React from "react";
+import React, { useState } from "react";
 import "./App.css";
+import { nanoid } from "nanoid";
+import data from "./mock-data.json";
 
 function App() {
+  const [receipts, setReceipts] = useState(data);
+  const [addFormData, setAddFormData] = useState({
+    date: "",
+    amount: "",
+    paymentMode: "",
+    remark: "",
+  });
+
+  const handleAddFormChange = (event) => {
+    event.preventDefault();
+
+    const fieldName = event.target.getAttribute("name");
+    const fieldValue = event.target.value;
+
+    const newFormData = { ...addFormData };
+    newFormData[fieldName] = fieldValue;
+
+    setAddFormData(newFormData);
+  };
+
+  console.log(addFormData);
+
+  const handleAddFormSubmit = (event) => {
+    event.preventDefault();
+
+    const newContact = {
+      id: nanoid(),
+      date: addFormData.date,
+      amount: addFormData.amount,
+      paymentMode: addFormData.paymentMode,
+      remark: addFormData.remark,
+    };
+
+    const newContacts = [...receipts, newContact];
+    setReceipts(newContacts);
+  };
+
   return (
     <div className="app-container">
       <h2>Receipt Details</h2>
-      <form>
+      <form onSubmit={handleAddFormSubmit}>
         <div className="add_form">
           <div>
             <p>
@@ -25,26 +64,29 @@ function App() {
               name="date"
               required="required"
               placeholder="Enter Date"
+              onChange={handleAddFormChange}
             />
             <input
               type="number"
               name="amount"
               required="required"
               placeholder="Enter Amount (in INR)"
+              onChange={handleAddFormChange}
             />
-            <select name="gender">
+            <select name="paymentMode" onChange={handleAddFormChange}>
               <option value="none" selected>
                 Cash
               </option>
-              <option value="male">Visa Card</option>
-              <option value="female">Master Card</option>
+              <option value="Visa Card">Visa Card</option>
+              <option value="Master Card">Master Card</option>
               <option value="other">other</option>
             </select>
             <input
-              type="email"
-              name="email"
-              required="required"
-              placeholder="Enter remark."
+              type="text"
+              name="remark"
+              // required="required"
+              placeholder="Enter remark"
+              onChange={handleAddFormChange}
             />
           </div>
         </div>
