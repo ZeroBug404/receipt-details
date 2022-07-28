@@ -5,42 +5,52 @@ function App() {
   return (
     <div className="app-container">
       <h2>Receipt Details</h2>
-      <form className="add_form">
-        <div>
-          <p>Date</p>
-          <p>Amount</p>
-          <p>Payment Mode</p>
-          <p>Remark</p>
-        </div>
-        <div className="form_inputs">
-          <input
-            type="date"
-            name="date"
-            required="required"
-            placeholder="Enter Date"
-          />
-          <input
-            type="number"
-            name="amount"
-            required="required"
-            placeholder="Enter Amount (in INR)"
-          />
-          <input
-            type="text"
-            name="phoneNumber"
-            required="required"
-            placeholder="Enter a phone number..."
-          />
-          <input
-            type="email"
-            name="email"
-            required="required"
-            placeholder="Enter remark."
-          />
+      <form>
+        <div className="add_form">
+          <div>
+            <p>
+              Date<span style={{ color: "red" }}>*</span>
+            </p>
+            <p>
+              Amount<span style={{ color: "red" }}>*</span>
+            </p>
+            <p>
+              Payment Mode<span style={{ color: "red" }}>*</span>
+            </p>
+            <p>Remark</p>
+          </div>
+          <div className="form_inputs">
+            <input
+              type="date"
+              name="date"
+              required="required"
+              placeholder="Enter Date"
+            />
+            <input
+              type="number"
+              name="amount"
+              required="required"
+              placeholder="Enter Amount (in INR)"
+            />
+            <select name="gender">
+              <option value="none" selected>
+                Cash
+              </option>
+              <option value="male">Visa Card</option>
+              <option value="female">Master Card</option>
+              <option value="other">other</option>
+            </select>
+            <input
+              type="email"
+              name="email"
+              required="required"
+              placeholder="Enter remark."
+            />
+          </div>
         </div>
 
-        <div>
-          <button type="submit">CANCEL</button>
+        <div className="buttons">
+          <button type="cancel">CANCEL</button>
           <button type="submit">SUBMIT</button>
         </div>
       </form>

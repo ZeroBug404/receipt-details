@@ -2,7 +2,11 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-  padding: 1rem;
+  padding: 3rem;
+  width: 50%;
+  margin: 0 auto;
+  background: rgb(248, 246, 246);
+  margin-top: 2rem;
 }
 
 .add_form{
@@ -12,7 +16,22 @@
 .form_inputs{
   display: flex;
   flex-direction: column;
-  gap: 5;
+  gap: 20px;
+  margin-top: 0.8rem;
+  margin-left: 5rem;
+}
+
+.buttons{
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+.buttons button{
+  padding: 0.5rem 1rem;
+  border: none;
+  background: rgb(27, 126, 40);
+  color: wheat;
+  border-radius: 5px;
 }
 
 table {
@@ -36,10 +55,10 @@ td {
   background-color: rgb(205, 235, 253);
 }
 
-form {
+/* form {
   display: flex;
   gap: 5px;
-}
+} */
 
 form td:last-child {
   display: flex;
