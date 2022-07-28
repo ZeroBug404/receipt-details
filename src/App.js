@@ -1,12 +1,18 @@
 import { nanoid } from "nanoid";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
-import data from "./mock-data.json";
 import ReadOnlyRow from "./components/ReadOnlyRow";
 import EditableRow from "./components/EditableRow";
 
 function App() {
-  const [receipts, setReceipts] = useState(data);
+  const [receipts, setReceipts] = useState([]);
+
+  useEffect(() => {
+    fetch('mock-data.json')
+    .then(res => res.json())
+    .then(data => setReceipts(data))
+  },[])
+
   const [addFormData, setAddFormData] = useState({
     date: "",
     amount: "",
@@ -62,6 +68,8 @@ function App() {
 
     const newContacts = [...receipts, newContact];
     setReceipts(newContacts);
+
+    event.target.reset();
   };
 
   const handleEditFormSubmit = (event) => {
@@ -91,7 +99,7 @@ function App() {
       <h2>Receipt Details</h2>
       <form onSubmit={handleAddFormSubmit}>
         <div className="add_form">
-          <div>
+          <div className="labels">
             <p>
               Date<span style={{ color: "red" }}>*</span>
             </p>
@@ -109,6 +117,7 @@ function App() {
               name="date"
               required="required"
               placeholder="Enter Date"
+              style={{width: '200px'}}
               onChange={handleAddFormChange}
             />
             <input
@@ -116,28 +125,31 @@ function App() {
               name="amount"
               required="required"
               placeholder="Enter Amount (in INR)"
+              style={{width: '400px'}}
               onChange={handleAddFormChange}
             />
-            <select name="paymentMode" onChange={handleAddFormChange}>
-              <option value="none" selected>
-                Cash
+            <select name="paymentMode" onChange={handleAddFormChange}
+            style={{width: '250px'}}>
+              <option value="Cash" selected>
+                Select
               </option>
+              <option value="Cash">Cash</option>
               <option value="Visa Card">Visa Card</option>
               <option value="Master Card">Master Card</option>
-              <option value="other">other</option>
             </select>
             <input
               type="text"
               name="remark"
               // required="required"
               placeholder="Enter remark"
+              style={{width: '400px'}}
               onChange={handleAddFormChange}
             />
           </div>
         </div>
 
         <div className="buttons">
-          <button type="cancel">CANCEL</button>
+          <button style={{background: 'white', color: 'red', border: '1px solid #ff5733'}} type="cancel">CANCEL</button>
           <button type="submit">SUBMIT</button>
         </div>
       </form>
@@ -151,10 +163,10 @@ function App() {
         <table>
           <thead>
             <tr>
-              <th>Name</th>
-              <th>Address</th>
-              <th>Phone Number</th>
-              <th>Email</th>
+              <th>Date</th>
+              <th>Amount</th>
+              <th>Payment Mode</th>
+              <th>Remark</th>
               <th>Actions</th>
             </tr>
           </thead>

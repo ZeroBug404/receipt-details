@@ -1,0 +1,16 @@
+[
+    {
+      "id": 1,
+      "date": "2022-07-30",
+      "amount": "500",
+      "paymentMode": "Visa Card",
+      "remark": "something"
+    },
+    {
+      "id": 1,
+      "date": "2022-08-25",
+      "amount": "700",
+      "paymentMode": "Cash",
+      "remark": "something"
+    }
+]

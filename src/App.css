@@ -13,13 +13,27 @@
   display: flex;
 }
 
+.labels{
+  display: flex;
+  flex-direction: column;
+
+}
+
 .form_inputs{
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 22px;
   margin-top: 0.8rem;
   margin-left: 5rem;
 }
+
+.form_inputs input, select{
+  padding: 8px;
+  color: gray;
+  border: 2px solid #c4bfbf;
+  border-radius: 5px;
+}
+
 
 .buttons{
   display: flex;
@@ -30,7 +44,7 @@
   padding: 0.5rem 1rem;
   border: none;
   background: rgb(27, 126, 40);
-  color: wheat;
+  color: rgb(255, 255, 255);
   border-radius: 5px;
 }
 
